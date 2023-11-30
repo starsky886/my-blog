@@ -12,7 +12,7 @@
 
 <script>
 import MessageArea from "@/components/MessageArea";
-import { getComments,postComment } from "@/api/blog";
+import { getComments, postComment } from "@/api/blog";
 import fetchData from "@/mixins/fetchData";
 export default {
   mixins: [fetchData({ total: 0, rows: [] })],
@@ -25,13 +25,45 @@ export default {
       page: 1,
     };
   },
+  created() {
+    window.fetchMore = this.fetchMore;
+    this.$bus.$on("mainScroll", this.handleScroll);
+  },
+  destroyed() {
+    this.$bus.$off("mainScroll", this.handleScroll);
+  },
+  computed: {
+    hasMore() {
+      return this.data.rows.length < this.data.total;
+    },
+  },
   methods: {
+    async handleScroll(dom) {
+      if (this.isLoading || !dom) {
+        return
+      }
+      //设定一个范围值
+      const range = 100
+      const top = Math.abs(dom.scrollTop + dom.clientHeight - dom.scrollHeight)
+      if (top < range) {
+        //到底部了
+         this.fetchMore()
+      }
+    },
     async fetchData() {
-      return  await getComments(
-        this.$route.params.id,
-        this.page,
-        this.limit
-      );
+      return await getComments(this.$route.params.id, this.page, this.limit);
+    },
+    //加载下一页
+    async fetchMore() {
+      if (!this.hasMore) {
+        return;
+      }
+      this.isLoading = true;
+      this.page++;
+      const rep = await this.fetchData();
+      this.data.total = rep.total;
+      this.data.rows = this.data.rows.concat(rep.rows);
+      this.isLoading = false;
     },
     async handleSubmit(formData, callback) {
       const resp = await postComment({

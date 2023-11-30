@@ -32,6 +32,7 @@
         <router-view></router-view>
       </template>
     </Layout>
+    <ToTop></ToTop>
   </div>
 </template>
 
@@ -45,6 +46,7 @@ import Contact from "./components/Contact";
 import Menu from "./components/Menu";
 import SiteAside from "./components/SiteAside";
 import Layout from "./components/Layout";
+import ToTop from "./components/ToTop"
 
 export default {
   name: "App",
@@ -63,6 +65,7 @@ export default {
     Menu,
     SiteAside,
     Layout,
+    ToTop,
   },
   methods: {
     handlePageChange(n) {

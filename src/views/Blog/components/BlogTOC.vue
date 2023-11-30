@@ -60,7 +60,10 @@ export default {
       location.hash = item.anchor;
     },
     //设置active为正确的值
-    setActive() {
+    setActive(dom) {
+      if(!dom) {
+        return
+      }
       //开始之前得先清空
       this.isActive = "";
       //设置一个限制值

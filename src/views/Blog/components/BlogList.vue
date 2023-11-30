@@ -63,6 +63,16 @@ export default {
   components: {
     Pager,
   },
+  mounted() {
+    this.$refs.container.addEventListener('scroll', this.handleScroll)
+  },
+  created() {
+    this.$bus.$on('setMainScroll', this.handleMainScroll)
+  },
+  beforeDestroy() {
+    this.$bus.$off('setMainScroll', this.handleMainScroll)
+    this.$refs.container.removeEventListener('scroll', this.handleScroll)
+  },
   computed: {
     // 获取路由信息
     routeInfo() {
@@ -78,6 +88,12 @@ export default {
   },
   methods: {
     formatDate,
+    handleMainScroll() {
+      this.$refs.container.scrollTop = 0
+    },
+    handleScroll() {
+      this.$bus.$emit('mainScroll', this.$refs.container)
+    },
     async fetchData() {
       return await getBlogInfo(
         this.routeInfo.page,

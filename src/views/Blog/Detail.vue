@@ -36,13 +36,22 @@ export default {
     },
     handleScroll() {
       this.$bus.$emit('mainScroll',this.$refs.detailBox)
+    },
+    handleMainScroll(height) {
+      // console.log('111=',height)
+      this.$refs.detailBox.scrollTop = 0
     }
+  },
+  created() {
+    this.$bus.$on('setMainScroll', this.handleMainScroll)
   },
   mounted() {
     this.$refs.detailBox.addEventListener('scroll', this.handleScroll)
   },
-  destroyed() {
+  beforeDestroy() {
+    this.$bus.$emit('mainScroll')
     this.$refs.detailBox.removeEventListener('scroll', this.handleScroll)
+    this.$bus.$off('setMainScroll', this.handleMainScroll)
   },
   updated() {
     const hash = location.hash
