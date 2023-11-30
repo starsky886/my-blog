@@ -26,7 +26,6 @@ export default {
       const totalArticleCount = this.data.reduce((a, b) => {
         return a + b.articleCount
       }, 0);
-      console.log("totalArticleCount==", totalArticleCount);
       const result = [
         { name: "全部", id: -1, articleCount: totalArticleCount },
         ...this.data,
@@ -40,7 +39,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.data);
   },
   methods: {
     async fetchData() {

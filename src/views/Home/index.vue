@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     switchTo(index) {
-      console.log(index);
       this.index = index;
     },
     // handleWheel(e) {

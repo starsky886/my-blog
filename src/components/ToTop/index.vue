@@ -24,7 +24,6 @@ export default {
       this.show = dom.scrollTop >= 1000; 
     },
     handleClick() {
-        console.log('1234')
         this.$bus.$emit('setMainScroll',0)
     }
   },

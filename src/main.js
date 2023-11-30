@@ -5,7 +5,9 @@ import router from '@/router/index'
 import showMessage from '@/utils/showMessage'
 import { getBanner } from './api/banner'
 import vLoading from '@/direactive/loading'
+import vLazy from '@/direactive/lazy'
 Vue.directive('loading', vLoading)
+Vue.directive('lazy', vLazy)
 // import './api/banner'
 import './mock'
 import './eventBus'

@@ -27,7 +27,6 @@ export default {
     },
     update(el, binding) {
            //根据binding的信息，决定创建或者删除元素，加到el上
-           console.log(binding.value)
            const curImg = getLoadingImg(el)
            if (binding.value) {
                if (!curImg) {

@@ -30,4 +30,18 @@
 // }
 
 import Vue from 'vue';
-Vue.prototype.$bus = new Vue({})
+
+/**
+ * 事件名：mainScroll
+ * 含义：主区域滚动条位置变化后触发
+ * 参数：滚动的Dom元素，如果是undefine，则表示dom元素不存在
+ * 
+ * 
+ * 事件名：setMainScroll
+ * 含义：当需要设置滚动区域时触发
+ * 参数：滚动高度
+ * 
+ */
+const app = new Vue({})
+Vue.prototype.$bus = app
+export default app

@@ -65,7 +65,6 @@
     },
     methods:{
       handleClick(n) {
-          console.log(n)
           this.$emit('pageChange',n)
       }
     }

@@ -33,7 +33,6 @@ export default function (options = {}) {
   div.style.transform = `translate(-50%,-50%)`
   div.style.opacity = 1,
 
-    console.log(div)
   //等一段事件消失
   setTimeout(() => {
     div.style.transform = `translate(-50%,-50%) translateY(-25px)`

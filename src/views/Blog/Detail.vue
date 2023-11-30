@@ -39,7 +39,6 @@ export default {
   updated() {
     const hash = location.hash
     location.hash = ""
-    console.log("hash===", hash)
     setTimeout(()=>{
       location.hash = hash
     },50)
