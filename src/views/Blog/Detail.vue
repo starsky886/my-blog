@@ -20,10 +20,11 @@ import BlogCommit from "./components/BlogCommit.vue";
 import BlogTOC from "./components/BlogTOC.vue";
 import Layout from "@/components/Layout";
 import fetchData from "@/mixins/fetchData";
+import mainScroll from "@/mixins/mainScroll.js"
 import { getBlog } from "@/api/blog";
 
 export default {
-  mixins: [fetchData(null)],
+  mixins: [fetchData(null), mainScroll('detailBox')],
   components: {
     BlogDetail,
     BlogTOC,
@@ -34,24 +35,6 @@ export default {
     async fetchData() {
         return await getBlog(this.$route.params.id)
     },
-    handleScroll() {
-      this.$bus.$emit('mainScroll',this.$refs.detailBox)
-    },
-    handleMainScroll(height) {
-      // console.log('111=',height)
-      this.$refs.detailBox.scrollTop = 0
-    }
-  },
-  created() {
-    this.$bus.$on('setMainScroll', this.handleMainScroll)
-  },
-  mounted() {
-    this.$refs.detailBox.addEventListener('scroll', this.handleScroll)
-  },
-  beforeDestroy() {
-    this.$bus.$emit('mainScroll')
-    this.$refs.detailBox.removeEventListener('scroll', this.handleScroll)
-    this.$bus.$off('setMainScroll', this.handleMainScroll)
   },
   updated() {
     const hash = location.hash
@@ -69,6 +52,7 @@ export default {
   height: 100%;
   overflow-y: scroll;
   padding: 20px;
+  scroll-behavior: smooth;
 }
 .right-container {
   width: 300px;

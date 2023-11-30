@@ -58,21 +58,13 @@ import Pager from "@/components/Pager";
 import fetchData from "@/mixins/fetchData.js";
 import { getBlogInfo } from "@/api/blog.js";
 import formatDate from "@/utils/formatDate.js";
+import mainScroll from '@/mixins/mainScroll.js'
 export default {
-  mixins: [fetchData({})],
+  mixins: [fetchData({}),mainScroll('container')],
   components: {
     Pager,
   },
-  mounted() {
-    this.$refs.container.addEventListener('scroll', this.handleScroll)
-  },
-  created() {
-    this.$bus.$on('setMainScroll', this.handleMainScroll)
-  },
-  beforeDestroy() {
-    this.$bus.$off('setMainScroll', this.handleMainScroll)
-    this.$refs.container.removeEventListener('scroll', this.handleScroll)
-  },
+
   computed: {
     // 获取路由信息
     routeInfo() {
@@ -88,12 +80,7 @@ export default {
   },
   methods: {
     formatDate,
-    handleMainScroll() {
-      this.$refs.container.scrollTop = 0
-    },
-    handleScroll() {
-      this.$bus.$emit('mainScroll', this.$refs.container)
-    },
+
     async fetchData() {
       return await getBlogInfo(
         this.routeInfo.page,
