@@ -1,18 +1,18 @@
 <template>
-  <div v-loading="isLoading" class="home-container" ref="container">
+  <div v-loading="loading" class="home-container" ref="container">
     <ul
       class="carousel-container"
       :style="{
         marginTop,
       }"
     >
-      <li v-for="item in banners" :key="item.id">
+      <li v-for="item in data" :key="item.id">
         <CarousItem  :carousel="item"></CarousItem>
       </li>
     </ul>
     <ul class="left-position">
       <li
-        v-for="(item, i) in banners"
+        v-for="(item, i) in data"
         :key="item.id"
         :class="{ active: i === index }"
         @click="switchTo(i)"
@@ -22,41 +22,35 @@
       <Icon type="arrowUp"></Icon>
     </div>
     <div
-      v-show="index < banners.length - 1"
+      v-show="index < data.length - 1"
       class="icon icon-down"
       @click="switchTo(index + 1)"
     >
       <Icon type="arrowDown"></Icon>
     </div>
   </div>
-  <!-- <Loading v-else></Loading> -->
 </template>
   
 <script>
 import CarousItem from "./CarousItem.vue";
 import Icon from "@/components/Icon";
-import { getBanner } from "@/api/banner";
-import Loading from "@/components/Loading";
+import { mapState } from 'vuex';
 
 export default {
   data() {
     return {
-      banners: [],
       index: 0,
       containerHeight: 0, //容器高度
       // wheeling: false, //是否正在滚动
-      isLoading: true,
     };
   },
   async created() {
-    this.banners = await getBanner();
-    this.isLoading = false
-    //  console.log
+    console.log('store===',this.$store)
+    this.$store.dispatch("banner/fetchBanner")
   },
   components: {
     CarousItem,
     Icon,
-    Loading,
   },
   mounted() {
     this.containerHeight = this.$refs.container.clientHeight;
@@ -65,6 +59,7 @@ export default {
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
+    ...mapState('banner',['data','loading'])
   },
   methods: {
     switchTo(index) {

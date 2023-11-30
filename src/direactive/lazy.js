@@ -12,7 +12,6 @@ function setImage(img) {
     const rect = img.dom.getBoundingClientRect()
     if (!(rect.top < -rect.height || rect.top > clientHeight)) {
         //在可视区域内 
-        console.log('加载真实图片',img.dom)
         const tempImage = new Image()
         tempImage.onload = () => {
             img.dom.src = img.src

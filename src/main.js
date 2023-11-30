@@ -6,18 +6,20 @@ import showMessage from '@/utils/showMessage'
 import { getBanner } from './api/banner'
 import vLoading from '@/direactive/loading'
 import vLazy from '@/direactive/lazy'
+import store from './store'
 Vue.directive('loading', vLoading)
 Vue.directive('lazy', vLazy)
 // import './api/banner'
 import './mock'
 import './eventBus'
 getBanner()
-
+console.log('1223',store)
 
 Vue.prototype.$showMessage = showMessage
 Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
