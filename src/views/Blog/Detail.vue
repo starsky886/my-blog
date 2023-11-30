@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <template #main>
-      <div class="blog-detail-box" v-loading="isLoading">
+      <div ref="detailBox" class="blog-detail-box" v-loading="isLoading">
         <BlogDetail v-if="data" :blog="data"  />
         <BlogCommit v-if="!isLoading"/>
       </div>
@@ -33,8 +33,25 @@ export default {
   methods: {
     async fetchData() {
         return await getBlog(this.$route.params.id)
+    },
+    handleScroll() {
+      this.$bus.$emit('mainScroll',this.$refs.detailBox)
     }
   },
+  mounted() {
+    this.$refs.detailBox.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed() {
+    this.$refs.detailBox.removeEventListener('scroll', this.handleScroll)
+  },
+  updated() {
+    const hash = location.hash
+    location.hash = ""
+    console.log("hash===", hash)
+    setTimeout(()=>{
+      location.hash = hash
+    },50)
+  }
 };
 </script>
 

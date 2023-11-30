@@ -8,6 +8,7 @@ import vLoading from '@/direactive/loading'
 Vue.directive('loading', vLoading)
 // import './api/banner'
 import './mock'
+import './eventBus'
 getBanner()
 
 
