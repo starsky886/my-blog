@@ -22,6 +22,7 @@ import Layout from "@/components/Layout";
 import fetchData from "@/mixins/fetchData";
 import mainScroll from "@/mixins/mainScroll.js"
 import { getBlog } from "@/api/blog";
+import setTitle from '@/utils/setTitle'
 
 export default {
   mixins: [fetchData(null), mainScroll('detailBox')],
@@ -33,7 +34,11 @@ export default {
   },
   methods: {
     async fetchData() {
-        return await getBlog(this.$route.params.id)
+        const resp =  await getBlog(this.$route.params.id)
+        if (resp.title) {
+          setTitle.setRouterTitle(resp.title)
+        }
+        return resp
     },
   },
   updated() {

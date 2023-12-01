@@ -8,6 +8,7 @@ import Blog from '@/views/Blog'
 import Message from '@/views/Message'
 import Project from '@/views/Project'
 import BlogDetail from '@/views/Blog/Detail.vue'
+import setTitle from '@/utils/setTitle'
 Vue.use(VueRouters)
 
 const router = new VueRouters({
@@ -16,40 +17,65 @@ const router = new VueRouters({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: {
+        name: '首页'
+      }
     },
     {
       path: '/about',
       name: 'About',
-      component: About
+      component: About,
+      meta: {
+        name: '关于我'
+      }
     },
 
     {
       path: '/blog',
       name: 'Blog',
-      component: Blog
+      component: Blog,
+      meta: {
+        name: '文章'
+      }
     },
     {
       path: '/blog/cate/:categoryId',
       name: 'CategoryBlog',
-      component: Blog
+      component: Blog,
+      meta: {
+        name: '文章'
+      }
     },
     {
       path: '/blog/:id',
       name: 'BlogDetail',
-      component: BlogDetail
+      component: BlogDetail,
+      meta: {
+        name: '文章详情'
+      }
     },
     {
       path: '/message',
       name: 'Message',
-      component: Message
+      component: Message,
+      meta: {
+        name: '留言板'
+      }
     },
     {
       path: '/project',
       name: 'Project',
-      component: Project
+      component: Project,
+      meta: {
+        name: '项目&效果'
+      }
     },
   ]
+})
+
+router.afterEach((to,from)=>{
+  setTitle.setSiteTitle(to.meta.name)
 })
 export default router
 
