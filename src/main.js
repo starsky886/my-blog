@@ -13,7 +13,8 @@ Vue.directive('lazy', vLazy)
 import './mock'
 import './eventBus'
 getBanner()
-console.log('1223',store)
+store.dispatch("setting/fetchSetting");
+
 
 Vue.prototype.$showMessage = showMessage
 Vue.config.productionTip = false
